@@ -1,7 +1,3 @@
-import ch.heg.ig.sda.CommentsAnalyzer;
-import ch.heg.ig.sda.ICommentsAnalyzer;
-import ch.heg.ig.sda.business.Comment;
-
 public class Main {
 
     public static void main(String[] args) {
