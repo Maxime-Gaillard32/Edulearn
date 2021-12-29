@@ -7,13 +7,15 @@ public class Document {
     private String path;
     private LocalDateTime uploadDate;
     private DocumentType type;
+    private DocumentExtension extension;
     private Student owner;
 
-    public Document(int id, String path, LocalDateTime uploadDate, DocumentType documentType, Student owner) {
+    public Document(int id, String path, LocalDateTime uploadDate, DocumentType documentType, DocumentExtension extension, Student owner) {
         this.setId(id);
         this.setPath(path);
         this.setUploadDate(uploadDate);
         this.setType(documentType);
+        this.setExtension(extension);
         this.setOwner(owner);
     }
 
@@ -95,5 +97,13 @@ public class Document {
      */
     public void setOwner(Student owner) {
         this.owner = owner;
+    }
+
+    public DocumentExtension getExtension() {
+        return extension;
+    }
+
+    public void setExtension(DocumentExtension extension) {
+        this.extension = extension;
     }
 }
