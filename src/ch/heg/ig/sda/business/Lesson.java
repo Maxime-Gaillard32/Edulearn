@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ *  Class Lesson, represent a lesson.
  */
 public class Lesson {
     private int id;
@@ -19,13 +19,13 @@ public class Lesson {
     private List<Document> documents;
 
     /**
-     *
-     * @param id
-     * @param name
-     * @param description
-     * @param price
-     * @param owner
-     * @param teacher
+     * Lesson constructor, construct a new lesson.
+     * @param id Id of the lesson.
+     * @param name Name of the lesson.
+     * @param description Description of the lesson.
+     * @param price Price of to paid for the lesson.
+     * @param owner Owner of the lesson.
+     * @param teacher Teacher of the lesson.
      */
     public Lesson(int id, String name, String description, long price, Student owner, Student teacher) {
         this.setId(id);
@@ -39,34 +39,34 @@ public class Lesson {
     }
 
     /**
-     *
-     * @param participant
-     * @return
+     * Add a new participant in the list of participants.
+     * @param participant The new participant to add in the list.
+     * @return True if the participant is added else False.
      */
     public Boolean addParticipant(Student participant) {
         return this.getParticipants().put(participant.getRegistrationNumber(), participant) != null;
     }
 
     /**
-     *
-     * @param registrationNumber
-     * @return
+     * Remove a participant from the list of participants using the registration number.
+     * @param registrationNumber The registration number of the student to remove from the list.
+     * @return True if the participant is removed else False.
      */
     private Boolean removeParticipant(String registrationNumber) {
         return this.getParticipants().remove(registrationNumber) != null;
     }
 
     /**
-     *
-     * @param student
-     * @return
+     * Remove a participant from the list of participants using the student.
+     * @param student The student to remove from the list.
+     * @return True if the participant is removed else False.
      */
     private Boolean removeParticipant(Student student) {
         return this.removeParticipant(student.getRegistrationNumber());
     }
 
     /**
-     *
+     * 
      * @param id
      * @return
      */
