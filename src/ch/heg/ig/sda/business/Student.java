@@ -2,21 +2,15 @@ package ch.heg.ig.sda.business;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.opencsv.bean.CsvBindByName;
 
 /**
  * Class Student, represent a student.
  */
 public class Student {
-    @CsvBindByName(column = "id")
     private int id;
-    @CsvBindByName(column = "lastname")
     private String lastname;
-    @CsvBindByName(column = "firstname")
     private String firstname;
-    @CsvBindByName(column = "email")
     private String email;
-    @CsvBindByName(column = "registrationnumber")
     private String registrationNumber;
     private List<Lesson> lessonsFollowed;
 
