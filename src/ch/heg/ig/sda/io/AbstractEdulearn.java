@@ -10,46 +10,81 @@ import java.util.Map;
  * Abstract Edulearn class.
  */
 public abstract class AbstractEdulearn implements IEdulearn {
-    private List<Student> studentList;
-    private List<Document> documentList;
-    private List<Lesson> lessonList;
+    private Map<String, Student> studentList;
+    private Map<String, Lesson> lessonList;
 
     /**
      * Load student in list from data source.
      */
-    public abstract void loadStudents();
-
-    /**
-     * Load documents in list from data source.
-     */
-    public abstract void loadDocuments();
+    public abstract Map<String, Student> loadStudents();
 
     /**
      * Load lessons in list from data source.
      */
-    public abstract void loadLessons();
+    public abstract Map<String, Lesson> loadLessons();
 
     /**
-     * Get all lessons from list.
-     * @return The lesson list.
+     * Add a new lesson to the lessons list.
+     * @param lesson The lesson to add.
+     * @return True if it's added else False.
      */
-    public List<Lesson> getAllLessons() {
-        return this.getLessonList();
+    @Override
+    public Boolean addNewLesson(Lesson lesson) {
+        return this.getLessonList().putIfAbsent(lesson.getName(), lesson) != null;
     }
 
     /**
-     * Get the lesson by Id.
-     * @param id The lesson Id.
+     * Remove a lesson from the list.
+     * @return True if it's removed else False.
+     */
+    @Override
+    public Boolean removeLesson(Lesson lesson) {
+        return this.getLessonList().remove(lesson.getName()) != null;
+    }
+
+    /**
+     * Get lesson by name in lessons list.
+     * @param name The name of the lesson.
      * @return The lesson if it exists else Null.
      */
     @Override
-    public Lesson getLessonById(int id) {
-        for (Lesson currentLesson : this.getLessonList()) {
-            if(currentLesson.getId() == id)
-                return currentLesson;
-        }
+    public Lesson getLessonByName(String name) {
+        return this.getLessonList().get(name);
+    }
 
-        return null;
+    /**
+     * Add a new student to the students list.
+     * @return True if it's added else False.
+     */
+    @Override
+    public Boolean addStudent(Student student) {
+        return this.getStudentList().putIfAbsent(student.getRegistrationNumber(), student) != null;
+    }
+
+    /**
+     * Remove a student from the students list.
+     * @return True if it's removed else False.
+     */
+    @Override
+    public Boolean removeStudent(Student student) {
+        return this.getStudentList().remove(student.getRegistrationNumber()) != null;
+    }
+
+    /**
+     * Get all lessons owned by student.
+     * @param student The student.
+     * @return A list of the student lessons.
+     */
+    @Override
+    public List<Lesson> getAllOwnLessons(Student student) {
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        for (var entry : this.getLessonList().entrySet()) {
+            Lesson currentLesson = entry.getValue();
+            if(currentLesson.getOwner().equals(student)) {
+                lessons.add(currentLesson);
+            }
+        }
+        return lessons;
     }
 
     /**
@@ -68,52 +103,8 @@ public abstract class AbstractEdulearn implements IEdulearn {
      * @return The participant list.
      */
     @Override
-    public Map<String, Student> getParticipants(Lesson lesson) {
+    public List<Student> getParticipants(Lesson lesson) {
         return lesson.getParticipants();
-    }
-
-    /**
-     * Get the owner of the lesson.
-     * @param lesson The lesson on which get the owner.
-     * @return The lesson owner.
-     */
-    @Override
-    public Student getOwner(Lesson lesson) {
-        return lesson.getOwner();
-    }
-
-    /**
-     * Get the teacher of the lesson.
-     * @param lesson The lesson on which get the teacher.
-     * @return The lesson teacher.
-     */
-    @Override
-    public Student getTeacher(Lesson lesson) {
-        return lesson.getTeacher();
-    }
-
-    /**
-     * Get all student from list.
-     * @return The student list.
-     */
-    @Override
-    public List<Student> getAllStudent() {
-        return this.getStudentList();
-    }
-
-    /**
-     * Get a student by Id in list.
-     * @param id The student Id.
-     * @return The student if it exists else Null.
-     */
-    @Override
-    public Student getStudentById(int id) {
-        for (Student student : this.getStudentList()) {
-            if(student.getId() == id)
-                return student;
-        }
-
-        return null;
     }
 
     /**
@@ -123,12 +114,7 @@ public abstract class AbstractEdulearn implements IEdulearn {
      */
     @Override
     public Student getStudentByRegiNumber(String registrationNumber) {
-        for (Student student : this.getStudentList()) {
-            if(student.getRegistrationNumber().equals(registrationNumber))
-                return student;
-        }
-
-        return null;
+        return this.getStudentList().get(registrationNumber);
     }
 
     /**
@@ -148,40 +134,14 @@ public abstract class AbstractEdulearn implements IEdulearn {
      */
     @Override
     public List<Document> getStudentDocuments(Student student) {
-        ArrayList<Document> documents = new ArrayList<>();
-        for (Document currentDocument : this.getDocumentList()) {
-            if(currentDocument.getOwner().equals(student))
-                documents.add(currentDocument);
-        }
-
-        return documents;
-    }
-
-    /**
-     * Get the document extension of a document.
-     * @param document The document on which get the extension.
-     * @return The document extension.
-     */
-    @Override
-    public DocumentExtension getDocumentExtension(Document document) {
-        return document.getExtension();
-    }
-
-    /**
-     * Get the document type.
-     * @param document The document on which get the type.
-     * @return The document type.
-     */
-    @Override
-    public DocumentType getDocumentType(Document document) {
-        return document.getType();
+        return student.getDocuments();
     }
 
     /**
      * Get all students.
      * @return The student list.
      */
-    private List<Student> getStudentList() {
+    private Map<String, Student> getStudentList() {
         return studentList;
     }
 
@@ -189,31 +149,15 @@ public abstract class AbstractEdulearn implements IEdulearn {
      * Set the student list.
      * @param studentList The list to set.
      */
-    public void setStudentList(List<Student> studentList) {
+    public void setStudentList(Map<String, Student> studentList) {
         this.studentList = studentList;
-    }
-
-    /**
-     * Get all documents.
-     * @return The document list.
-     */
-    private List<Document> getDocumentList() {
-        return documentList;
-    }
-
-    /**
-     * ¨Set the document list.
-     * @param documentList The document list.
-     */
-    public void setDocumentList(List<Document> documentList) {
-        this.documentList = documentList;
     }
 
     /**
      * Get all lessons.
      * @return The lesson list.
      */
-    private List<Lesson> getLessonList() {
+    private Map<String, Lesson> getLessonList() {
         return lessonList;
     }
 
@@ -221,8 +165,16 @@ public abstract class AbstractEdulearn implements IEdulearn {
      * Set the lesson list.
      * @param lessonList The lesson list.
      */
-    public void setLessonList(List<Lesson> lessonList) {
+    public void setLessonList(Map<String, Lesson> lessonList) {
         this.lessonList = lessonList;
+    }
+
+    /**
+     * Get all student from list.
+     * @return The student list.
+     */
+    public Map<String, Student> getAllStudent() {
+        return this.getStudentList();
     }
 
 }

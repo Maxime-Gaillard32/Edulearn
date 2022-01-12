@@ -13,6 +13,7 @@ public class Student {
     private String email;
     private String registrationNumber;
     private List<Lesson> lessonsFollowed;
+    private List<Document> documents;
 
     /**
      * Student constructor, construct a new student.
@@ -80,6 +81,23 @@ public class Student {
         }
 
         return null;
+    }
+
+    /**
+     * Add new document as propriety of the student.
+     * @param document The new document.
+     * @return True if the document is added else False.
+     */
+    public boolean addNewDocument(Document document) {
+        return this.getDocuments().add(document);
+    }
+
+    /**
+     * Add a lesson to the lessons followed by student.
+     * @param lesson The new lesson.
+     */
+    public void followNewLesson(Lesson lesson) {
+        this.getLessonsFollowed().add(lesson);
     }
 
     /**
@@ -168,5 +186,13 @@ public class Student {
      */
     public List<Lesson> getLessonsFollowed() {
         return lessonsFollowed;
+    }
+
+    /**
+     * Get all the documents of the student.
+     * @return Documents list owned by student.
+     */
+    public List<Document> getDocuments() {
+        return documents;
     }
 }

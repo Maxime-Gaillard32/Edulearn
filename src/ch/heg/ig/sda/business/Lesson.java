@@ -1,7 +1,6 @@
 package ch.heg.ig.sda.business;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ public class Lesson {
     private String name;
     private String description;
     private long price;
-    private HashMap<String, Student> participants;
+    private List<Student> participants;
     private Student owner;
     private Student teacher;
     private List<Document> documents;
@@ -34,7 +33,7 @@ public class Lesson {
         this.setPrice(price);
         this.setOwner(owner);
         this.setTeacher(teacher);
-        participants = new HashMap<>();
+        participants = new ArrayList<>();
         documents = new ArrayList<>();
     }
 
@@ -44,7 +43,7 @@ public class Lesson {
      * @return True if the participant is added else False.
      */
     public Boolean addParticipant(Student participant) {
-        return this.getParticipants().put(participant.getRegistrationNumber(), participant) != null;
+        return this.getParticipants().add(participant);
     }
 
     /**
@@ -53,7 +52,16 @@ public class Lesson {
      * @return True if the participant is removed else False.
      */
     private Boolean removeParticipant(String registrationNumber) {
-        return this.getParticipants().remove(registrationNumber) != null;
+        return this.getParticipants().remove(this.getParticipant(registrationNumber));
+    }
+
+    /**
+     * Remove a participant from the list of participants using the Id.
+     * @param id The Id of the student to remove from the list.
+     * @return True if the participant is removed else False.
+     */
+    private Boolean removeParticipant(int id) {
+        return this.getParticipants().remove(this.getParticipant(id));
     }
 
     /**
@@ -70,11 +78,9 @@ public class Lesson {
      * @param id The student Id to search.
      * @return The student object.
      */
-    private Student getParticipantById(int id) {
-        for(Map.Entry<String, Student> participant : this.getParticipants().entrySet()) {
-            Student student = participant.getValue();
-            if(student.getId() == id)
-                return student;
+    private Student getParticipant(int id) {
+        for (Student currentStudent : this.getParticipants()) {
+            if(currentStudent.getId() == id) return currentStudent;
         }
 
         return null;
@@ -83,10 +89,16 @@ public class Lesson {
     /**
      * Get the registration number of a participant.
      * @param registrationNumber The registration number to search.
-     * @return
+     * @return The student if it exists else false.
      */
-    private Student getParticipantByRegiNum(String registrationNumber) {
-        return this.getParticipants().get(registrationNumber);
+    private Student getParticipant(String registrationNumber) {
+        for (Student currentStudent : this.getParticipants()) {
+            if(currentStudent.getRegistrationNumber().equals(registrationNumber)) {
+                return currentStudent;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -113,7 +125,7 @@ public class Lesson {
      * @return True if the document is removed.
      */
     private Boolean removeDocument(int id) {
-        return this.removeDocument(this.getDocumentById(id));
+        return this.removeDocument(this.getDocument(id));
     }
 
     /**
@@ -133,28 +145,12 @@ public class Lesson {
     }
 
     /**
-     * Get a document from the document list using an index.
-     * @param index The index of the document.
+     * Get a document from the list by an index.
+     * @param index The document index.
      * @return The document object if it exists else Null.
      */
     private Document getDocument(int index) {
         return this.getDocuments().get(index);
-    }
-
-    /**
-     * Get a document from the list by an Id.
-     * @param id The document Id.
-     * @return The document object if it exists else Null.
-     */
-    private Document getDocumentById(int id) {
-        ArrayList<Document> documents = (ArrayList<Document>) this.getDocuments();
-
-        for (Document currentDocument : documents) {
-            if (currentDocument.getId() == id)
-                return currentDocument;
-        }
-
-        return null;
     }
 
     /**
@@ -225,7 +221,7 @@ public class Lesson {
      * Get the participants of the lesson.
      * @return HashMap of participants.
      */
-    public HashMap<String, Student> getParticipants() {
+    public List<Student> getParticipants() {
         return participants;
     }
 

@@ -6,17 +6,17 @@ import java.util.Map;
 
 
 public interface IEdulearn {
-    List<Lesson> getAllLessons();
-    Lesson getLessonById(int id);
-    List<Lesson> getLessonsFollowed(Student student);
-    Map<String, Student> getParticipants(Lesson lesson);
-    Student getOwner(Lesson lesson);
-    Student getTeacher(Lesson lesson);
-    List<Student> getAllStudent();
-    Student getStudentById(int id);
-    Student getStudentByRegiNumber(String registrationNumber);
+    Map<String, Lesson> loadLessons();
+    Map<String, Student> loadStudents();
+    Boolean addNewLesson(Lesson lesson);
+    Boolean removeLesson(Lesson lesson);
+    Lesson getLessonByName(String name);
     List<Document> getLessonsDocuments(Lesson lesson);
+    Boolean addStudent(Student student);
+    Boolean removeStudent(Student student);
+    Student getStudentByRegiNumber(String registrationNumber);
+    List<Lesson> getLessonsFollowed(Student student);
+    List<Lesson> getAllOwnLessons(Student student);
+    List<Student> getParticipants(Lesson lesson);
     List<Document> getStudentDocuments(Student student);
-    DocumentExtension getDocumentExtension(Document document);
-    DocumentType getDocumentType(Document document);
 }
