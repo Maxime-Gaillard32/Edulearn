@@ -6,8 +6,8 @@ import java.util.Map;
 
 
 public interface IEdulearn {
-    Map<String, Lesson> loadLessons();
-    Map<String, Student> loadStudents();
+    void loadLessons();
+    void loadStudents();
     Boolean addNewLesson(Lesson lesson);
     Boolean removeLesson(Lesson lesson);
     Lesson getLessonByName(String name);

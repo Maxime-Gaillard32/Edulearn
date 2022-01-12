@@ -3,6 +3,7 @@ package ch.heg.ig.sda.io;
 import ch.heg.ig.sda.business.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,18 +11,18 @@ import java.util.Map;
  * Abstract Edulearn class.
  */
 public abstract class AbstractEdulearn implements IEdulearn {
-    private Map<String, Student> studentList;
-    private Map<String, Lesson> lessonList;
+    private Map<String, Student> studentList = new HashMap<>();
+    private Map<String, Lesson> lessonList = new HashMap<>();
 
     /**
      * Load student in list from data source.
      */
-    public abstract Map<String, Student> loadStudents();
+    public abstract void loadStudents();
 
     /**
      * Load lessons in list from data source.
      */
-    public abstract Map<String, Lesson> loadLessons();
+    public abstract void loadLessons();
 
     /**
      * Add a new lesson to the lessons list.

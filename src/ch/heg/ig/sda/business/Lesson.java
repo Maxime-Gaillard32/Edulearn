@@ -23,6 +23,20 @@ public class Lesson {
      * @param name Name of the lesson.
      * @param description Description of the lesson.
      * @param price Price of to paid for the lesson.
+     */
+    public Lesson(int id, String name, String description, long price) {
+        this.setId(id);
+        this.setName(name);
+        this.setDescription(description);
+        this.setPrice(price);
+    }
+
+    /**
+     * Lesson constructor, construct a new lesson.
+     * @param id Id of the lesson.
+     * @param name Name of the lesson.
+     * @param description Description of the lesson.
+     * @param price Price of to paid for the lesson.
      * @param owner Owner of the lesson.
      * @param teacher Teacher of the lesson.
      */

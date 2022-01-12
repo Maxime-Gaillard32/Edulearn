@@ -24,15 +24,13 @@ public class EdulearnDb extends AbstractEdulearn {
      * Load all students from database.
      */
     @Override
-    public Map<String, Student> loadStudents() {
-        return null;
+    public void loadStudents() {
     }
 
     /**
      * Load all lessons from database.
      */
     @Override
-    public Map<String, Lesson> loadLessons() {
-        return null;
+    public void loadLessons() {
     }
 }
