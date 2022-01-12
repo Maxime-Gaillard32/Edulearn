@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface Edulearn {
+public interface IEdulearn {
     List<Lesson> getAllLessons();
     Lesson getLessonById(int id);
     List<Lesson> getLessonsFollowed(Student student);
