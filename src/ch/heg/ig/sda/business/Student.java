@@ -2,6 +2,7 @@ package ch.heg.ig.sda.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class Student, represent a student.
@@ -194,5 +195,43 @@ public class Student {
      */
     public List<Document> getDocuments() {
         return documents;
+    }
+
+    /**
+     * Compare the object in params with self object.
+     * @param o Object to compare.
+     * @return True if the object are the same else False.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+
+        return lastname.equals(student.lastname) && firstname.equals(student.firstname) && registrationNumber.equals(student.registrationNumber);
+    }
+
+    /**
+     * Generate Hash code based on lastname, firstname and registrationNumber.
+     * @return The hash code.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastname, firstname, registrationNumber);
+    }
+
+    /**
+     * Build and return a Student String.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", lastname='" + lastname + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", email='" + email + '\'' +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                '}';
     }
 }

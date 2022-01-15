@@ -50,8 +50,9 @@ public class EdulearnCSV extends AbstractEdulearn{
         for (String[] currentLesson : csvLessons) {
             this.addNewLesson(new Lesson(Integer.parseInt(currentLesson[0]),
                                          currentLesson[1],
-                                         currentLesson[3],
-                                         Long.parseLong(currentLesson[2]))
+                                         currentLesson[2],
+                                         Double.parseDouble(currentLesson[3]),
+                                         this.getStudentByRegiNumber(currentLesson[4]))
             );
         }
     }

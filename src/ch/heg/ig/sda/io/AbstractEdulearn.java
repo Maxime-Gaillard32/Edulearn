@@ -81,7 +81,7 @@ public abstract class AbstractEdulearn implements IEdulearn {
         ArrayList<Lesson> lessons = new ArrayList<>();
         for (var entry : this.getLessonList().entrySet()) {
             Lesson currentLesson = entry.getValue();
-            if(currentLesson.getOwner().equals(student)) {
+            if(student.equals(currentLesson.getOwner())) {
                 lessons.add(currentLesson);
             }
         }
@@ -178,4 +178,25 @@ public abstract class AbstractEdulearn implements IEdulearn {
         return this.getStudentList();
     }
 
+    /**
+     * Display all lessons.
+     */
+    public void displayLessons() {
+        Map<String, Lesson> map = this.getLessonList();
+
+        for (Map.Entry<String, Lesson> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
+        }
+    }
+
+    /**
+     * Display all lessons.
+     */
+    public void displayStudents() {
+        Map<String, Student> map = this.getStudentList();
+
+        for (Map.Entry<String, Student> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
+        }
+    }
 }

@@ -3,6 +3,7 @@ package ch.heg.ig.sda.business;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *  Class Lesson, represent a lesson.
@@ -11,7 +12,7 @@ public class Lesson {
     private int id;
     private String name;
     private String description;
-    private long price;
+    private double price;
     private List<Student> participants;
     private Student owner;
     private Student teacher;
@@ -29,6 +30,22 @@ public class Lesson {
         this.setName(name);
         this.setDescription(description);
         this.setPrice(price);
+    }
+
+    /**
+     * Lesson constructor, construct a new lesson.
+     * @param id Id of the lesson.
+     * @param name Name of the lesson.
+     * @param description Description of the lesson.
+     * @param price Price of to paid for the lesson.
+     * @param owner Owner of the lesson.
+     */
+    public Lesson(int id, String name, String description, double price, Student owner) {
+        this.setId(id);
+        this.setName(name);
+        this.setDescription(description);
+        this.setPrice(price);
+        this.setOwner(owner);
     }
 
     /**
@@ -219,7 +236,7 @@ public class Lesson {
      * Get the lesson price.
      * @return The lesson price.
      */
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -227,7 +244,7 @@ public class Lesson {
      * Set the lesson price.
      * @param price The lesson price.
      */
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -277,5 +294,41 @@ public class Lesson {
      */
     public List<Document> getDocuments() {
         return documents;
+    }
+
+    /**
+     * Compare the object in params with self object.
+     * @param o Object to compare.
+     * @return True if the object are the same else False.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lesson lesson = (Lesson) o;
+        return name.equals(lesson.name) && owner.equals(lesson.owner);
+    }
+
+    /**
+     * Generate Hash code based on lastname, firstname and registrationNumber.
+     * @return The hash code.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, owner);
+    }
+
+    /**
+     * Build and return a lesson String.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", owner=" + owner +
+                '}';
     }
 }
